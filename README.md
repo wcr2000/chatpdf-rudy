@@ -1,1 +1,2 @@
-# chatpdf-rudy
+# Chat-Multi-PDFs
+Chat Multi-PDF
