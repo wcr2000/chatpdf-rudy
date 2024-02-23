@@ -9,7 +9,7 @@ from langchain.prompts import PromptTemplate
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.chat_models import ChatOpenAI
 
-os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+# os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
 def get_pdf_text(pdf_docs):
     text = ""
@@ -29,7 +29,7 @@ def get_text_chunks(text):
 
 def get_vector_store(text_chunks):
     # embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
-    embeddings = OpenAIEmbeddings()
+    embeddings = OpenAIEmbeddings(openai_api_key="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")
     vector_store = FAISS.from_texts(text_chunks, embedding=embeddings)
     vector_store.save_local("faiss_index")
 
@@ -46,7 +46,7 @@ def get_conversational_chain():
     # model = ChatGoogleGenerativeAI(model="gemini-pro",
     #                                temperature=1)
 
-    model = ChatOpenAI(model_name="gpt-4-1106-preview",temperature=0)
+    model = ChatOpenAI(model_name="gpt-4-1106-preview",temperature=0,openai_api_key="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")
 
     prompt = PromptTemplate(template=prompt_template,
                             input_variables=["context", "question"])
@@ -57,7 +57,7 @@ def get_conversational_chain():
 
 def user_input(user_question):
     # embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
-    embeddings = OpenAIEmbeddings()
+    embeddings = OpenAIEmbeddings(openai_api_key="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")
 
     new_db = FAISS.load_local("faiss_index", embeddings)
     docs = new_db.similarity_search(user_question)
